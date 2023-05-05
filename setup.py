@@ -1,22 +1,26 @@
-from setuptools import find_packages , setup 
+from setuptools import find_packages,setup
 from typing import List
 
-REQUIREMENT_FILE_NAME = "requirements.txt"
-HYPHEN_E_DOT = "-e ."
+HYPEN_E_DOT ='-e .'
 
-def get_requirement() -> List[str]:
-    with open(REQUIREMENT_FILE_NAME) as requirement_file:
-        requirement_list = requirement_file.readline()
-    requirement_list = [requirement_name.replace(/n,"") for requirement_name in requirement_list]
-    if HYPHEN_E_DOT in requirement_list:
-        requirement_list.remove(HYPHEN_E_DOT)
-    return requirement_list
+def get_requirements(file_path:str)->List[str]:
+    '''
+    this function will return the list of requirements
 
- setup(
-    name="sensor",
-    version="0.0.1",
-    author="Ankit",
+    '''
+    requirements = []
+    with open(file_path) as file_obj:
+        requirements = file_obj.readlines()
+        requirements = [req.replace("/n","") for req in requirements]
+        if HYPEN_E_DOT in requirements:
+            requirements.remove(HYPEN_E_DOT)
+    return requirements
+
+setup(
+    name= "aps",
+    Version = "0.0.1",
+    author = 'Ankit',
     author_email="janbandhu.ankit786@gmail.com",
     packages= find_packages(),
-    install_requires = get_requirement(),
- )
+    install_requires= get_requirements('requirements.txt')
+)
