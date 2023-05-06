@@ -33,7 +33,25 @@ class DataIngestion:
 
             #split dataset into train and test set
             train_df,test_df = train_test_split(df,test_size=data_ingestion_config.test_size,random_state=42)
-            
+
+            #creating dataset dir if not available
+            dataset_dir = os.path.dirname(self.data_ingestion_config.train_file_path)
+            os.makedirs(dataset_dir,exist_ok=True)
+
+            #save df to feature store folder
+
+            train_df.to_csv(path_or_buf=self.data_ingestion_config.train_file_path,index=False,header=True)
+            test_df.to_csv(path_or_buf=self.data_ingestion_config.test_file_path,index=False,header=True)
+
+            data_ingesttion_artifact = artifact_entity.DataIngestionArtifact(
+                                    feature_store_file_path=self.data_ingestion_config.feature_store_file_path, 
+                                    train_file_path=self.data_ingestion_config.train_file_path, 
+                                    test_file_path=self.data_ingestion_config.test_file_path)
+            return data_ingestion_artifact
+
+
+
+
 
         except Exception as e:
             raise SensorException(e,sys)
