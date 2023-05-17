@@ -34,7 +34,7 @@ class DataValidation:
             null_report = df.isna().sum()/df.shape[0]
             #selecting column names which contain the null values
             drop_column_names = null_report[null_report>0.3].index
-            self.validation_error[report_key_name]=drop_column_names
+            self.validation_error[report_key_name]=list(drop_column_names)
             df.drop(list(drop_column_names),axis =1,inplace = True)
             if len(df.columns)==0:
                 return None
@@ -69,12 +69,12 @@ class DataValidation:
                 same_distribution = ks_2samp(base_data,current_data)
                 print(same_distribution)
                 if same_distribution.pvalue>0.05:
-                    drift_report[base_column]={"pvalues":same_distribution.pvalue,
+                    drift_report[base_column]={"pvalues":float(same_distribution.pvalue),
                                                     "same_distribution":True}
                         #same distribution
                         
                 else:
-                    drift_report[base_column]={"pvalues":same_distribution.pvalue,
+                    drift_report[base_column]={"pvalues":float(same_distribution.pvalue),
                                                     "same_distribution":False}
                                                 
                         #different distribution

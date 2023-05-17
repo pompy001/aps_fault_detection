@@ -21,7 +21,7 @@ def get_collection_as_dataframe(database_name:str,collection_name:str)->pd.DataF
         logging.info(f"Found Columns : {df.columns}")
         if "_id" in df.columns:
             logging.info(f"Dropping columns :_id")
-            df.drop("_id",axis=1)
+            df.drop("_id",axis=1,inplace=True)
         logging.info(f"Row and columns : {df.shape[0]} , {df.shape[1]}")
         return df
 
